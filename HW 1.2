@@ -1,0 +1,95 @@
+#linear dependency
+
+import numpy as np
+
+def is_linearly_independent(vectors):
+    matrix = np.vstack(vectors)
+    
+    rank = np.linalg.matrix_rank(matrix)
+    return rank == len(vectors)
+
+def span_vector_space(vectors):
+    
+    matrix = np.vstack(vectors)
+    rank = np.linalg.matrix_rank(matrix)
+    return rank
+
+vectors = np.array([[1, 0, 0], [0, 1, 0], [1, 1, 0]])
+
+if is_linearly_independent(vectors):
+    print("The vectors are linearly independent.")
+else:
+    print("The vectors are linearly dependent.")
+
+
+# orthogonality
+import numpy as np
+
+vec1 = np.array([1, -2, 5])
+vec2 = np.array([-2, -1, 0])
+
+def are_orthogonal(vec1, vec2):
+    dot_product = np.dot(vec1, vec2)
+    if dot_product == 0:
+      print("The vectors are orthogonal.")
+    else:
+      print("The vectors are not orthogonal.")
+
+are_orthogonal(vec1, vec2)
+
+#Gram shmidt 
+
+def dot_product(v1, v2):
+    return sum(x * y for x, y in zip(v1, v2))
+
+def scalar_multiply(scalar, vector):
+    return [scalar * x for x in vector]
+
+def vector_subtract(v1, v2):
+    return [x - y for x, y in zip(v1, v2)]
+
+def vector_norm(v):
+    return sum(x**2 for x in v) ** 0.5
+
+def gram_schmidt(vectors):
+    orthogonal_vectors = []
+
+    for v in vectors:
+        w = v
+        
+        for u in orthogonal_vectors:
+            projection = scalar_multiply(dot_product(w, u) / dot_product(u, u), u)
+            w = vector_subtract(w, projection)
+        
+        norm = vector_norm(w)
+        w_normalized = scalar_multiply(1/norm, w)
+        
+        orthogonal_vectors.append(w_normalized)
+    
+    return orthogonal_vectors
+
+vectors = [[1, 1, 0], [1, 0, 1], [0, 1, 1]]
+orthonormal_vectors = gram_schmidt(vectors)
+
+print("Orthonormal Vectors:")
+for vec in orthonormal_vectors:
+    print(vec)
+
+#eigenvalues and eigen vectors
+
+import sympy as sp
+
+matrix = sp.Matrix([[4, -2], [1, 1]])
+
+eigenvals = matrix.eigenvals()
+eigenvects = matrix.eigenvects() 
+
+# Use 'matrix' instead of 'matrix_values'
+eigenvals_values = matrix.eigenvals()  
+eigenvects_values = matrix.eigenvects()
+
+for eigenvect in eigenvects_values:
+    print(f"Eigenvalue: {eigenvect[0]}")
+    print("Eigenvector(s):")
+    sp.pprint(eigenvect[2])
+    print()
