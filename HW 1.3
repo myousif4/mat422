@@ -1,0 +1,72 @@
+#QR decomposition
+import numpy as np
+
+def qr_decomposition(A):
+    n, m = A.shape
+
+    Q = np.zeros((n, m))
+    R = np.zeros((m, m))
+
+    for j in range(m):
+        v = A[:, j]
+
+        for i in range(j):
+            R[i, j] = np.dot(Q[:, i], A[:, j])
+            v = v - R[i, j] * Q[:, i]
+
+        R[j, j] = np.linalg.norm(v)
+        Q[:, j] = v / R[j, j]
+
+    return Q, R
+
+A = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+Q, R = qr_decomposition(A)
+
+print("Q matrix:")
+print(Q)
+
+print("\nR matrix:")
+print(R)
+
+#least squares
+import numpy as np
+
+def least_squares(A, b):
+    x = np.linalg.inv(A.T @ A) @ A.T @ b
+    return x
+
+A = np.array([[1, 1], [1, 2], [1, 3]])  
+b = np.array([1, 2, 2])                
+
+x = least_squares(A, b)
+
+print("Solution to the least squares problem (x):")
+print(x)
+
+#linear regression
+import numpy as np
+import matplotlib.pyplot as plt
+
+def linear_regression(X, y):
+    X_b = np.c_[np.ones((len(X), 1)), X]
+    theta = np.linalg.inv(X_b.T @ X_b) @ X_b.T @ y
+    return theta
+
+X = np.array([[1.5], [2.5], [3], [4], [5]])
+y = np.array([1, 2, 3, 4, 5])
+
+theta = linear_regression(X, y)
+
+intercept = theta[0]
+slope = theta[1]
+
+print(f"Intercept (c): {intercept}")
+print(f"Slope (m): {slope}")
+
+plt.scatter(X, y, color='yellow', label='Data points')
+plt.plot(X, X * slope + intercept, color='blue', label='Fitted line')
+plt.xlabel('X')
+plt.ylabel('y')
+plt.legend()
+plt.title('Linear Regression')
+plt.show()
