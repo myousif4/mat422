@@ -1,1 +1,78 @@
+#probability axioms
+def non_negativity(prob):
+    return prob >= 0
+
+def normalization(probabilities):
+    return sum(probabilities) == 1
+
+def additivity(prob_a, prob_b):
+    return prob_a + prob_b
+
+# Example probabilities
+P_A = 0.3
+P_B = 0.2
+P_C = 0.5
+
+# Check non-negativity
+print("P(A) non-negative:", non_negativity(P_A))
+print("P(B) non-negative:", non_negativity(P_B))
+print("P(C) non-negative:", non_negativity(P_C))
+
+# Check normalization
+probabilities = [P_A, P_B, P_C]
+print("Probabilities normalize to 1:", normalization(probabilities))
+
+# Check additivity for mutually exclusive events
+print("P(A) + P(B) =", additivity(P_A, P_B))
+
+#conditional probability
+def conditional_probability(P_A_and_B, P_B):
+    return P_A_and_B / P_B if P_B > 0 else None
+
+# Example probabilities
+P_A_and_B = 0.1  # Probability of both A and B
+P_B = 0.2        # Probability of B
+
+# Calculate conditional probability P(A | B)
+P_A_given_B = conditional_probability(P_A_and_B, P_B)
+
+if P_A_given_B is not None:
+    print(f"P(A | B) = {P_A_given_B}")
+else:
+    print("P(B) cannot be zero.")
+
+#Discrete random variables 
+# Define outcomes and their probabilities
+outcomes = [1, 2, 3, 4, 5]
+probabilities = [0.1, 0.2, 0.3, 0.2, 0.2]
+
+# Calculate the expected value
+expected_value = sum(o * p for o, p in zip(outcomes, probabilities))
+
+# Print the expected value
+print(f"Expected Value (E[X]) = {expected_value}")
+
+# Print outcomes and probabilities
+for outcome, probability in zip(outcomes, probabilities):
+    print(f"P(X = {outcome}) = {probability}")
+
+#Continues random variables
+# Parameters for the uniform distribution
+a = 0  # Lower bound
+b = 10  # Upper bound
+
+# Calculate the PDF for a uniform distribution
+def pdf(x):
+    return 1 / (b - a) if a <= x <= b else 0
+
+# Expected value for a uniform distribution
+expected_value = (a + b) / 2
+
+# Test the PDF at some values
+x_values = [0, 5, 10, 15]
+for x in x_values:
+    print(f"PDF at x = {x}: {pdf(x)}")
+
+# Print the expected value
+print(f"Expected Value (E[X]) = {expected_value}")
 
