@@ -1,0 +1,39 @@
+#Joint probability distributions 
+import numpy as np
+
+# Possible outcomes for two coins
+outcomes = ['HH', 'HT', 'TH', 'TT']
+
+# Initialize joint probability dictionary
+joint_prob = {outcome: 0 for outcome in outcomes}
+
+# Calculate probabilities (assuming each outcome is equally likely)
+for outcome in outcomes:
+    joint_prob[outcome] = 1 / len(outcomes)  # Each outcome has a probability of 1/4
+
+# Print joint probabilities
+for outcome, prob in joint_prob.items():
+    print(f"Joint Probability of {outcome}: {prob:.2f}")
+
+#Correlation and dependence 
+import numpy as np
+
+# Sample data
+x = np.array([1, 2, 3, 4, 5])
+y = np.array([2, 4, 6, 8, 10])  # Perfect linear relationship with x
+
+# Calculate correlation coefficient
+correlation = np.corrcoef(x, y)[0, 1]
+
+# Print the result
+print(f'Correlation coefficient: {correlation:.2f}')
+
+
+#Random samples
+import numpy as np
+
+# Generate 10 random samples from a uniform distribution between 0 and 1
+random_samples = np.random.rand(10)
+
+# Print the random samples
+print("Random Samples:", random_samples)
