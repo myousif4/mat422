@@ -1,0 +1,68 @@
+#K means
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+
+# Define a small 2D dataset
+X = np.array([[1, 2], [1, 4], [1, 0],
+              [4, 2], [4, 4], [4, 0]])
+
+# Apply KMeans clustering with 2 clusters
+kmeans = KMeans(n_clusters=2)
+kmeans.fit(X)
+
+# Get the cluster centers and labels
+centers = kmeans.cluster_centers_
+labels = kmeans.labels_
+
+# Plot the dataset and the cluster centers
+plt.scatter(X[:, 0], X[:, 1], c=labels, cmap='viridis', s=100, alpha=0.6)
+plt.scatter(centers[:, 0], centers[:, 1], c='red', marker='X', s=200, label='Centroids')
+
+plt.title("Simple K-Means Clustering")
+plt.xlabel("Feature 1")
+plt.ylabel("Feature 2")
+plt.legend()
+plt.show()
+
+#Support vector machine
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.svm import SVC
+
+# Simple 2D dataset
+X = np.array([[1, 2], [2, 3], [3, 3], [6, 5], [7, 6], [8, 8]])  # Features
+y = np.array([0, 0, 0, 1, 1, 1])  # Labels (0 or 1)
+
+# Create and train the SVM model with a linear kernel
+svm = SVC(kernel='linear')
+svm.fit(X, y)
+
+# Plot the dataset
+plt.scatter(X[:, 0], X[:, 1], c=y, cmap='coolwarm', s=100, edgecolors='k', marker='o')
+
+# Get the SVM decision boundary
+ax = plt.gca()
+xlim = ax.get_xlim()
+ylim = ax.get_ylim()
+
+# Create grid for visualization
+xx, yy = np.meshgrid(np.linspace(xlim[0], xlim[1], 100),
+                     np.linspace(ylim[0], ylim[1], 100))
+
+# Predict class labels for each point in the grid
+Z = svm.predict(np.c_[xx.ravel(), yy.ravel()])
+Z = Z.reshape(xx.shape)
+
+# Plot decision boundary
+plt.contourf(xx, yy, Z, alpha=0.3, cmap='coolwarm')
+
+# Plot the support vectors
+plt.scatter(svm.support_vectors_[:, 0], svm.support_vectors_[:, 1], c='black', marker='X', s=150, label='Support Vectors')
+
+# Labels and title
+plt.title("Simple Support Vector Machine (SVM)")
+plt.xlabel("Feature 1")
+plt.ylabel("Feature 2")
+plt.legend()
+plt.show()
